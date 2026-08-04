@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/screens/login_screen.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -337,7 +337,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
 
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
 
                             child: const Text(
                               "Login",
