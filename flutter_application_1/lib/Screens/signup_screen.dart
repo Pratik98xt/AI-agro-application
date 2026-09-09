@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -11,6 +13,33 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool obscurePassword = true;
   bool obscureConfirmPassword = true;
+
+  final nameController = TextEditingController();
+  final mobileController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  Future<void> createAccount() async{
+    if(passwordController.text != confirmPasswordController.text){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password Dose not Match"),));
+      return;
+    }
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text.trim(), 
+      password: passwordController.text.trim()
+    );
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Account Created Sucessfully"),));
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
+
+   
+
+    }
+
+
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: nameController,
                         decoration: InputDecoration(
                           hintText: "Enter your full name",
 
@@ -112,6 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                       const Text(
                         "Mobile Number",
+                        
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
@@ -121,6 +152,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                       TextField(
                         keyboardType: TextInputType.phone,
+                        controller: mobileController,
 
                         decoration: InputDecoration(
                           hintText: "Enter mobile number",
@@ -147,6 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: emailController,
                         keyboardType:
                             TextInputType.emailAddress,
 
@@ -175,6 +208,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: passwordController,
                         obscureText: obscurePassword,
 
                         decoration: InputDecoration(
@@ -216,6 +250,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: confirmPasswordController,
                         obscureText: obscureConfirmPassword,
 
                         decoration: InputDecoration(
@@ -252,7 +287,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         width: double.infinity,
                         height: 52,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: createAccount,
 
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

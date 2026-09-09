@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "998865978543",
+    "project_id": "agroapplication-becf6",
+    "storage_bucket": "agroapplication-becf6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998865978543:android:a7a24758a4bcefc0bbc05a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGqf1uia9RdKbweaz_3KUxTB19ddNkPJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

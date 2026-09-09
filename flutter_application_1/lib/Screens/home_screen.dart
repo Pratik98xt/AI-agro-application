@@ -6,12 +6,16 @@ import 'package:flutter_application_1/Screens/market_price_screen.dart';
 import 'package:flutter_application_1/Screens/scan_crop_screen.dart';
 import 'package:flutter_application_1/Screens/weather_screen.dart';
 import '../Model/bottom_nav_bar.dart';
+//import 'ai_chat_screen.dart';
+//import 'profile_screen.dart';
+//import 'scan_crop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+  
 }
 
 class _HomeScreenState extends State<HomeScreen> {

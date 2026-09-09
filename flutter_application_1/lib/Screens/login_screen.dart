@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/signup_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +11,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final emailController=TextEditingController();
+  final passwordController=TextEditingController();
+  bool obscurePassword=true;
+
+  Future<void> loginUser() async {
+   try {
+     await FirebaseAuth.instance.signInWithEmailAndPassword(
+       email: emailController.text.trim(),
+       password: passwordController.text.trim(),
+     );
+
+     Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomeScreen(),),);
+   }  on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message ?? "Login failed"),),);
+  }
+}
 
   
   @override
@@ -146,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           hintText: "farmer@agroai.com",
                           prefixIcon: const Icon(Icons.email_outlined),
@@ -165,13 +184,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       //PasswordField--------------------------------------------------
                       TextField(
+                        controller: passwordController,
                         decoration: InputDecoration(
                           hintText: "Enter password",
 
                           prefixIcon: const Icon(Icons.lock_outline),
 
                           suffixIcon: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                obscurePassword=!obscurePassword;
+                              });
+                            },
                             icon: Icon(Icons.visibility_off),
                           ),
 
@@ -208,10 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         height: 52,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomeScreen()));
-                          },
-
+                          onPressed: loginUser,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff2E7D32),
                             shape: RoundedRectangleBorder(
